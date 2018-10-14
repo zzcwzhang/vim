@@ -1,0 +1,112 @@
+"vimrc_vundles.vim文件
+"用来加载插件
+"
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>	"转到定义
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'kien/ctrlp.vim'
+Plugin 'https://github.com/Lokaltog/vim-powerline.git'
+
+"国人写的终端插件
+Plugin 'PangPangPangPangPang/vim-terminal'
+map <silent> <leader>t :VSTerminalToggle<cr>
+tmap <silent> <leader>t <c-w>:VSTerminalToggle<cr>
+
+"Vue语法判断插件
+Plugin 'posva/vim-vue'
+autocmd FileType vue syntax sync fromstart
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+
+Plugin 'isRuslan/vim-es6'
+Plugin 'groenewege/vim-less'
+Plugin 'mattn/emmet-vim'
+"html xml自动闭合标签
+Plugin 'docunext/closetag.vim'
+Plugin 'pangloss/vim-javascript'
+" Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'AutoClose'
+"swift
+Plugin 'toyamarinyon/vim-swift'
+"java
+Plugin 'vim-scripts/javacomplete'
+
+"Git配置"
+Plugin 'tpope/vim-fugitive'
+
+"注释插件vim-commentary
+" 注释插件
+augroup commentary
+	autocmd!
+	autocmd FileType python,shell set commentstring=#\ %s  "设置Python注释字符
+	autocmd FileType mako set cms=##\ %s
+	"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+augroup END
+Bundle "tpope/vim-commentary"
+
+"Tagbar
+Plugin 'majutsushi/tagbar'
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30
+let g:tagbar_right=1
+map <F8> :TagbarToggle<CR>
+
+
+filetype plugin on
+"自动补全用Vundle安装YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+
+"符号自动环绕
+Plugin 'tpope/vim-surround' 
+
+
+
+"前端配置"
+let g:user_emmet_install_global = 0
+augroup filetype_web
+	autocmd!
+	autocmd FileType html,css,php EmmetInstall
+augroup END
+
+
+"pydiction 1.2 python auto complete
+let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
+""defalut g:pydiction_menu_height == 15
+"let g:pydiction_menu_height = 20"
+
+
+"NERDTree导航设置"
+let g:NERDTreeIndicatorMapCustom = {
+			\ "Modified"  : "✹",
+			\ "Staged"    : "✚",
+			\ "Untracked" : "✭",
+			\ "Renamed"   : "➜",
+			\ "Unmerged"  : "═",
+			\ "Deleted"   : "✖",
+			\ "Dirty"     : "✗",
+			\ "Clean"     : "✔︎",
+			\ "Unknown"   : "?"
+			\ }
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+nnoremap <leader>mt :NERDTree<cr>
+
+" vim-powerline插件
+set laststatus=2
+set t_Co=256
+let g:Powerline_symbols = 'unicode'
+
+"TagBar配置
+nnoremap <Leader>md :TagbarToggle<CR>
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+let g:tagbar_ctags_bin='ctags'
+
+call vundle#end()
+filetype plugin indent on

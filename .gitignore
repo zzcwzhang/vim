@@ -1,0 +1,10 @@
+after/
+bundle/
+dict/
+ftplugin/
+plugin/
+pyplu/
+tools/
+.DS_Store
+.netrwhist
+.vimrc.swp
