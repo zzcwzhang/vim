@@ -8,3 +8,4 @@ tools/
 .DS_Store
 .netrwhist
 .vimrc.swp
+*.swp
