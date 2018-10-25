@@ -10,10 +10,12 @@
 :iabbrev imoprt import
 :iabbrev improt import
 :iabbrev ipmrot import
+:iabbrev cosnt const
 
 " 基础配置 ---------------------- {{{
 " 重要的全局配置
-let mapleader=" "
+let mapleader=","
+set mouse=a
 
 "中文编码
 set encoding=utf-8
@@ -26,9 +28,14 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+"添加终端
+Plugin 'PangPangPangPangPang/vim-terminal' 
+nnoremap <leader>mc :VSTerminalToggle<cr>
+tnoremap <leader>mc :VSTerminalToggle<cr>
 
 "YcuCompleteMe"
 Plugin 'Valloric/YouCompleteMe'
+"YcuCompleteMe"
 " 自动补全配置
 set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
@@ -67,7 +74,16 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
+
+"目录级搜索
 Plugin 'kien/ctrlp.vim'
+" 设置搜索时忽略的文件
+let g:ctrlp_custom_ignore = {
+			\ 'dir': '\v[\/]\(.git|.hg|.svn|.rvm|node_modules\)$'
+			\ }
+
+
+
 Plugin 'https://github.com/Lokaltog/vim-powerline.git'
 
 "文件树
@@ -94,11 +110,6 @@ let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTr
 
 "Vue语法判断插件
 Plugin 'posva/vim-vue'
-augroup vuegroup
-	autocmd!
-	autocmd FileType vue syntax sync fromstart
-	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-augroup END
 
 Plugin 'isRuslan/vim-es6'
 Plugin 'groenewege/vim-less'
@@ -113,6 +124,9 @@ Plugin 'AutoClose'
 Plugin 'toyamarinyon/vim-swift'
 "java
 Plugin 'vim-scripts/javacomplete'
+"nodeJs
+Plugin 'jamescarr/snipmate-nodejs'
+Plugin 'guileen/vim-node'
 
 "Git配置"
 Plugin 'tpope/vim-fugitive'
@@ -135,7 +149,6 @@ let g:tagbar_right=1
 map <F8> :TagbarToggle<CR>
 
 
-
 "符号自动环绕
 Plugin 'tpope/vim-surround' 
 
@@ -143,8 +156,6 @@ Plugin 'tpope/vim-surround'
 
 "前端配置"
 Plugin 'mattn/emmet-vim'
-" let g:user_emmet_install_global = 1
-let g:user_emmet_expandabbr_key = '<Tab>'
 
 " augroup filetype_web
 " 	autocmd!
@@ -251,16 +262,6 @@ onoremap p i(
 onoremap " F"f"
 onoremap ' F'f'
 
-"光标插入与正常不同
-if exists('$ITERM_PROFILE')
-	if exists('$TMUX')
-		let &t_SI = "<Esc>[3 q"
-		let &t_EI = "<Esc>[0 q"
-	else 
-		let &t_SI = "<Esc>]50;CursorShape=1x7"
-		let &t_EI = "<Esc>]50;CursorShape=0x7"
-	endif
-end
 
 augroup base
 	autocmd!
@@ -291,6 +292,20 @@ endfunction
 
 
 " 语言配置 ---------------------- {{{
+" let g:user_emmet_install_global = 1
+augroup emmet
+	autocmd!
+  autocmd FileType js,vue,html,php let g:user_emmet_expandabbr_key = '<Tab>'
+augroup END
+let g:user_emmet_expandabbr_key = '<c-e>'
+
+
+"Vue语法判断插件
+augroup vuegroup
+	autocmd!
+	autocmd FileType vue syntax sync fromstart
+	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+augroup END
 
 "PHP"
 "在浏览器预览 for Mac
@@ -362,6 +377,11 @@ augroup END
 "  }}} -语言配置 END
 
 
+"Node
+augroup node
+	autocmd!
+	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\ndoe.dict'
+augroup END
 
 
 
