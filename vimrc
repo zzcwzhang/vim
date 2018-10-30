@@ -68,6 +68,21 @@ let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
+" -----------------------------------------------
+" 代码注释
+" -----------------------------------------------
+Plugin 'scrooloose/nerdcommenter'
+
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = {
+			\ 'javascript': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
+			\ 'less': { 'left': '/*', 'right': '*/' }
+		\ }
+
+let g:NERDAltDelims_javascript = 1
+let g:NERDDefaultNesting = 1
+
 
 
 
@@ -77,11 +92,22 @@ Plugin 'vim-scripts/indentpython.vim'
 
 "目录级搜索
 Plugin 'kien/ctrlp.vim'
+"快捷键
+let g:ctrlp_map = '<Leader>p'
+let g:ctrlp_cmd = 'CtrlP'
 " 设置搜索时忽略的文件
 let g:ctrlp_custom_ignore = {
-			\ 'dir': '\v[\/]\(.git|.hg|.svn|.rvm|node_modules\)$'
+			\ 'dir': '\v[\/](.git|.hg|.svn|.rvm|node_modules|Go2Shell.app)$',
+			\ 'file': '\v\.(DS_Store|swp|exe|so|dll|zip|tar|tar.gz|pyc)$',
 			\ }
+"修改QuickFix窗口现实的最大条目数
+let g:ctrlp_max_height = 15
+let g:ctrlp_match_window_reversed = 0
 
+"使用按文件名搜索，而不是默认的按路径名
+let g:ctrlp_follow_symlinks = 1
+"自定义搜索列表的提示符
+let g:ctrlp_line_prefix = '♪ '
 
 
 Plugin 'https://github.com/Lokaltog/vim-powerline.git'
@@ -131,16 +157,6 @@ Plugin 'guileen/vim-node'
 "Git配置"
 Plugin 'tpope/vim-fugitive'
 
-"注释插件vim-commentary
-" 注释插件
-augroup commentary
-	autocmd!
-	autocmd FileType python,shell set commentstring=#\ %s  "设置Python注释字符
-	autocmd FileType mako set cms=##\ %s
-	"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-augroup END
-Bundle "tpope/vim-commentary"
-
 "Tagbar
 Plugin 'majutsushi/tagbar'
 let g:tagbar_ctags_bin='/usr/bin/ctags'
@@ -152,6 +168,14 @@ map <F8> :TagbarToggle<CR>
 "符号自动环绕
 Plugin 'tpope/vim-surround' 
 
+
+" Markdown
+Plugin 'suan/vim-instant-markdown'
+Plugin 'junegunn/goyo.vim'
+nnoremap <silent> <leader>d :Goyo<cr>
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
 
 
 "前端配置"
@@ -241,6 +265,9 @@ nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) 
 
 "快速编写自定义宏"
 " nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+"
+nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
+nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
 "重新加载vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr> 
