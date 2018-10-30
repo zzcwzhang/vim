@@ -28,11 +28,6 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-"添加终端
-Plugin 'PangPangPangPangPang/vim-terminal' 
-nnoremap <leader>mc :VSTerminalToggle<cr>
-tnoremap <leader>mc :VSTerminalToggle<cr>
-
 "YcuCompleteMe"
 Plugin 'Valloric/YouCompleteMe'
 "YcuCompleteMe"
