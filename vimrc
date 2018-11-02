@@ -28,11 +28,6 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-"添加终端
-Plugin 'PangPangPangPangPang/vim-terminal' 
-nnoremap <leader>mc :VSTerminalToggle<cr>
-tnoremap <leader>mc :VSTerminalToggle<cr>
-
 "YcuCompleteMe"
 Plugin 'Valloric/YouCompleteMe'
 "YcuCompleteMe"
@@ -47,10 +42,10 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 "youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_key_list_select_completion=['<c-n>']
+" let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion=['<c-p>']
+" let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 
 let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
@@ -71,6 +66,10 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 " -----------------------------------------------
 " 代码注释
 " -----------------------------------------------
+"  <leader>cc 加注释
+"  <leader>cu 揭开注视
+"  <leader>c<space> 加上/解开注释，智能判断
+"  <leader>cy 先复制， 在注释（p可以进行黏贴
 Plugin 'scrooloose/nerdcommenter'
 
 let g:NERDSpaceDelims = 1
@@ -369,6 +368,13 @@ augroup javaconfig
 	"java自动运行"
 	autocmd FileType java nnoremap <buffer> <F5> :!java %:r<cr>
 	autocmd FileType java nnoremap <buffer> <F4> :!javac %<cr>
+augroup END
+
+"Makefile
+augroup Makefile
+	autocmd!
+	autocmd FileType make nnoremap <buffer> <leader>r :!make<cr>
+	autocmd FileType make nnoremap <buffer> <F5> :!make<cr>
 augroup END
 
 
