@@ -11,6 +11,8 @@
 :iabbrev improt import
 :iabbrev ipmrot import
 :iabbrev cosnt const
+:iabbrev stirng string
+
 
 " 基础配置 ---------------------- {{{
 " 重要的全局配置
@@ -139,6 +141,8 @@ Plugin 'posva/vim-vue'
 Plugin 'isRuslan/vim-es6'
 Plugin 'groenewege/vim-less'
 
+"Go 代码高亮和检测
+Plugin 'Blackrush/vim-gocode'
 
 "html xml自动闭合标签
 Plugin 'docunext/closetag.vim'
@@ -222,7 +226,7 @@ set encoding=utf-8
 set helplang=cn
 set background=dark
 set nrformats=
-colorscheme evening
+colorscheme ron
 "split the screen
 set splitbelow
 set splitright
@@ -376,7 +380,22 @@ augroup Makefile
 	autocmd FileType make nnoremap <buffer> <leader>r :!make<cr>
 	autocmd FileType make nnoremap <buffer> <F5> :!make<cr>
 augroup END
+"测试用的C
+augroup Ctest
+	autocmd!
+	" 编译本文件，生成和本文件名相同的可执行文件（无后缀）
+	autocmd FileType c nnoremap <buffer> <F5> :!make<cr>
+	" 清除编译文件
+	autocmd FileType c nnoremap <buffer> <F4> :!make clean<cr>
+	" 运行本文件编译后的可执行文件
+	autocmd FileType c nnoremap <buffer> <leader>r :!%:r<cr>
+augroup END
 
+"Go
+augroup Goconfig
+	autocmd!
+	autocmd FileType go nnoremap <buffer> <F5> :!go run %<cr>
+augroup END
 
 "PYTHON"
 function! PythonShow(python_command)
@@ -413,7 +432,8 @@ augroup END
 "Node
 augroup node
 	autocmd!
-	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\ndoe.dict'
+	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
+	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
 augroup END
 
 
