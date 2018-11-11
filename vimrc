@@ -1,17 +1,18 @@
 "单词修复与扩展"
-" :iabbrev retrun return
-" :iabbrev thne then
-" :iabbrev adn and
-" :iabbrev atuo auto
-" :iabbrev flase false
-" :iabbrev ture true
-" :iabbrev sjon json
-" :iabbrev rul url
+:iabbrev retrun return
+:iabbrev thne then
+:iabbrev adn and
+:iabbrev atuo auto
+:iabbrev flase false
+:iabbrev ture true
+:iabbrev sjon json
+:iabbrev rul url
 :iabbrev imoprt import
 :iabbrev improt import
 :iabbrev ipmrot import
 :iabbrev cosnt const
 :iabbrev stirng string
+:iabbrev flaot float
 
 
 " 基础配置 ---------------------- {{{
@@ -29,6 +30,14 @@ filetype off                  " required!
 "加载插件
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
+"代码片段
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+" Optional:
+Plugin 'honza/vim-snippets'
+
 
 "YcuCompleteMe"
 Plugin 'Valloric/YouCompleteMe'
@@ -395,6 +404,7 @@ augroup END
 augroup Goconfig
 	autocmd!
 	autocmd FileType go nnoremap <buffer> <F5> :!go run %<cr>
+	autocmd FileType go iabbrev fpl fmt.Println()
 augroup END
 
 "PYTHON"
