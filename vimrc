@@ -32,11 +32,19 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 "代码片段
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-" Optional:
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" 使用新版的代码片段引擎
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+" Optional:
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 
 "YcuCompleteMe"
@@ -182,12 +190,19 @@ Plugin 'tpope/vim-surround'
 
 
 " Markdown
-Plugin 'suan/vim-instant-markdown'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'junegunn/goyo.vim'
+Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'iamcco/markdown-preview.vim'
 nnoremap <silent> <leader>d :Goyo<cr>
-
-let g:instant_markdown_slow = 1
-let g:instant_markdown_autostart = 0
+let g:mkdp_path_to_chrome="chrom"
+let g:mkdp_auto_close=0
+augroup markdown
+	autocmd!
+	autocmd filetype markdown nnoremap <F7> <Plug>MarkdownPreview
+	autocmd filetype markdown nnoremap <F8> <Plug>StopMarkdownPreview
+augroup END
 
 
 "前端配置"
@@ -235,7 +250,7 @@ set encoding=utf-8
 set helplang=cn
 set background=dark
 set nrformats=
-colorscheme ron
+colorscheme torte
 "split the screen
 set splitbelow
 set splitright
