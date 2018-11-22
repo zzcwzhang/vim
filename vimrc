@@ -249,8 +249,8 @@ set shiftwidth=2
 set encoding=utf-8
 set helplang=cn
 set background=dark
-set nrformats=
-colorscheme torte
+set nrformats=octal,hex
+colorscheme delek
 "split the screen
 set splitbelow
 set splitright
@@ -359,6 +359,12 @@ augroup vuegroup
 	autocmd!
 	autocmd FileType vue syntax sync fromstart
 	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+augroup END
+
+"html
+augroup htmlgroup
+	autocmd!
+	autocmd FileType html nnoremap <buffer> <F5> :call ViewInBrowser("cr")<cr> 
 augroup END
 
 "PHP"
