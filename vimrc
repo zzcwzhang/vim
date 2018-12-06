@@ -31,6 +31,24 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+"括号匹配
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\   'operators': '_,\|+\|-_',
+\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\   'separately': {
+\       '*': {},
+\       'tex': {
+\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\       },
+\       'css': 0,
+\   }
+\}
+
+
 "代码片段
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
@@ -250,7 +268,7 @@ set encoding=utf-8
 set helplang=cn
 set background=dark
 set nrformats=octal,hex
-colorscheme delek
+colorscheme solarized
 "split the screen
 set splitbelow
 set splitright
@@ -293,8 +311,13 @@ nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) 
 "快速编写自定义宏"
 " nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 "
+快速打开~/.bash_profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
+
+快速打开~/.zshrc
+nnoremap <leader>ez :vsplit ~/.zshrc<cr>
+nnoremap <leader>sb :source ~/.zshrc<cr>
 
 "重新加载vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr> 
