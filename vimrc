@@ -31,22 +31,31 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" 代码格式化
+Plugin 'Chiel92/vim-autoformat'
+noremap <F3> :Autoformat<CR>
+let g:formatdef_my_custom_vue = '"vue-beautify -s 2"'
+let g:formatters_vue = ['my_custom_vue']
+
+" Ack代替grep
+Plugin 'mileszs/ack.vim'
+
 "括号匹配
 Plugin 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-\   'operators': '_,\|+\|-_',
-\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\   'separately': {
-\       '*': {},
-\       'tex': {
-\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-\       },
-\       'css': 0,
-\   }
-\}
+			\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+			\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+			\   'operators': '_,\|+\|-_',
+			\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+			\   'separately': {
+			\       '*': {},
+			\       'tex': {
+			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+			\       },
+			\       'css': 0,
+			\   }
+			\}
 
 
 "代码片段
@@ -89,9 +98,9 @@ let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2	" 从第2个键入字符就开始罗列匹配项
 let g:ycm_cache_omnifunc=0	" 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_seed_identifiers_with_syntax=1	" 语法关键字补全
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
-"nnoremap <leader>lo :lopen<CR>	"open locationlist
-"nnoremap <leader>lc :lclose<CR>	"close locationlist
+nnoremap <leader>ll :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
+nnoremap <leader>lo :lopen<CR>	"open locationlist
+nnoremap <leader>lc :lclose<CR>	"close locationlist
 inoremap <leader><leader> <C-x><C-o>
 "在注释输入中也能补全
 let g:ycm_complete_in_comments = 1
@@ -99,6 +108,9 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
+
+"js补全
+Plugin 'ternjs/tern_for_vim'
 
 " -----------------------------------------------
 " 代码注释
@@ -114,7 +126,7 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCustomDelimiters = {
 			\ 'javascript': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
 			\ 'less': { 'left': '/*', 'right': '*/' }
-		\ }
+			\ }
 
 let g:NERDAltDelims_javascript = 1
 let g:NERDDefaultNesting = 1
@@ -204,7 +216,7 @@ map <F8> :TagbarToggle<CR>
 
 
 "符号自动环绕
-Plugin 'tpope/vim-surround' 
+Plugin 'tpope/vim-surround'
 
 
 " Markdown
@@ -227,8 +239,8 @@ augroup END
 Plugin 'mattn/emmet-vim'
 
 " augroup filetype_web
-" 	autocmd!
-" 	autocmd FileType html,css,php,vue, EmmetInstall
+"		autocmd!
+"		autocmd FileType html,css,php,vue, EmmetInstall
 " augroup END
 
 
@@ -288,7 +300,7 @@ vnoremap g y/<C-r>0<cr> "快速查找当前选择的部分
 "折叠
 set foldmethod=indent
 set foldlevel=99
-set nocompatible              " required   
+set nocompatible              " required
 "开启文件类型匹配"
 
 augroup filetype_vim
@@ -299,7 +311,7 @@ augroup END
 " 强化翻页
 nnoremap <Up> <c-b>
 nnoremap <Down> <c-f>
-nnoremap <Left> gT 
+nnoremap <Left> gT
 nnoremap <Right> gt
 
 "单词包围,自动添加"('等符号在一个单词左右
@@ -311,25 +323,25 @@ nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) 
 "快速编写自定义宏"
 " nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 "
-快速打开~/.bash_profile
+" 快速打开~/.bash_profile
 nnoremap <leader>eb :vsplit ~/.bash_profile<cr>
 nnoremap <leader>sb :!source ~/.bash_profile<cr>
 
-快速打开~/.zshrc
+" 快速打开~/.zshrc
 nnoremap <leader>ez :vsplit ~/.zshrc<cr>
 nnoremap <leader>sb :source ~/.zshrc<cr>
 
 "重新加载vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr> 
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
 "快速打开.vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "快速打开百度
-nnoremap <Leader>bd :!python2 /Users/apple/baidu.py<cr>		
+nnoremap <Leader>bd :!python2 /Users/apple/baidu.py<cr>
 
 "使用有道查找当前光标单词
-nnoremap <Leader>yd :!python2 /Users/apple/youdao.py <cword><cr>  
+nnoremap <Leader>yd :!python2 /Users/apple/youdao.py <cword><cr>
 
 "强化退出
 inoremap jk <esc>
@@ -344,9 +356,9 @@ augroup base
 	autocmd!
 	"每次打开文件恢复光标位置
 	autocmd BufReadPost *
-		\ if line("'\"") > 1 && line("'\"") <= line("$") |
-		\   exe "normal! g`\"" |
-		\ endif
+				\ if line("'\"") > 1 && line("'\"") <= line("$") |
+				\   exe "normal! g`\"" |
+				\ endif
 
 	"当前行高亮，插入模式下取消"
 	autocmd InsertLeave,WinEnter * set cursorline
@@ -355,7 +367,7 @@ augroup END
 
 "到同名后缀文件"
 function! Gsf(hg)
-	execute 'edit' fnamemodify(expand('%'),':r') . a:hg 	
+	execute 'edit' fnamemodify(expand('%'),':r') . a:hg
 endfunction
 
 "注释函数"
@@ -372,7 +384,7 @@ endfunction
 " let g:user_emmet_install_global = 1
 augroup emmet
 	autocmd!
-  autocmd FileType js,vue,html,php let g:user_emmet_expandabbr_key = '<Tab>'
+	autocmd FileType js,vue,html,php let g:user_emmet_expandabbr_key = '<Tab>'
 augroup END
 let g:user_emmet_expandabbr_key = '<c-e>'
 
@@ -387,7 +399,7 @@ augroup END
 "html
 augroup htmlgroup
 	autocmd!
-	autocmd FileType html nnoremap <buffer> <F5> :call ViewInBrowser("cr")<cr> 
+	autocmd FileType html nnoremap <buffer> <F5> :call ViewInBrowser("cr")<cr>
 augroup END
 
 "PHP"
