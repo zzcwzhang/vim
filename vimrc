@@ -26,6 +26,12 @@ let &termencoding=&encoding
 set fileencodings=utf-8,gb18030,gbk,gb2312,big5
 filetype off                  " required!
 
+"光标配置
+"http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
+let &t_SI.="\e[5 q"
+let &t_SR.="\e[4 q"
+let &t_EI.="\e[1 q"
+
 
 "加载插件
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -500,6 +506,7 @@ augroup node
 	autocmd!
 	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
 	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
+	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
 augroup END
 
 
