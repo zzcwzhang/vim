@@ -1,5 +1,6 @@
 "单词修复与扩展"
 :iabbrev retrun return
+:iabbrev cosnt const
 :iabbrev thne then
 :iabbrev adn and
 :iabbrev atuo auto
@@ -13,7 +14,6 @@
 :iabbrev cosnt const
 :iabbrev stirng string
 :iabbrev flaot float
-
 
 " 基础配置 ---------------------- {{{
 " 重要的全局配置
@@ -400,6 +400,7 @@ augroup vuegroup
 	autocmd!
 	autocmd FileType vue syntax sync fromstart
 	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+	autocmd filetype vue inoremap {{ {{}}<esc>hi
 augroup END
 
 "html
