@@ -166,6 +166,9 @@ let g:ctrlp_line_prefix = '♪ '
 
 Plugin 'https://github.com/Lokaltog/vim-powerline.git'
 
+"git
+Plugin 'airblade/vim-gitgutter.git'
+
 "文件树
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -243,6 +246,9 @@ augroup END
 
 "前端配置"
 Plugin 'mattn/emmet-vim'
+
+"stylus支持
+Plugin 'wavded/vim-stylus.git'
 
 " augroup filetype_web
 "		autocmd!
@@ -400,7 +406,11 @@ augroup vuegroup
 	autocmd!
 	autocmd FileType vue syntax sync fromstart
 	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-	autocmd filetype vue inoremap {{ {{}}<esc>hi
+	autocmd FileType vue inoremap {{ {{  }}<esc>hhi
+	autocmd FileType vue nnoremap <leader>c :set ft=css<cr>
+	autocmd FileType vue nnoremap <leader>h :set ft=html<cr>
+	autocmd FileType vue nnoremap <leader>v :set ft=vue<cr>
+	autocmd FileType vue nnoremap <leader>j :set ft=javascript<cr>
 augroup END
 
 "html
