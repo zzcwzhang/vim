@@ -166,8 +166,6 @@ let g:ctrlp_line_prefix = '♪ '
 
 Plugin 'https://github.com/Lokaltog/vim-powerline.git'
 
-"git
-Plugin 'airblade/vim-gitgutter.git'
 
 "文件树
 Plugin 'scrooloose/nerdtree'
@@ -190,10 +188,6 @@ let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp'] "忽略以下文件
 let NERDTreeShowLinenumbers = 1 "设置行号
 let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTree
 
-
-"Vue语法判断插件
-Plugin 'posva/vim-vue'
-
 Plugin 'isRuslan/vim-es6'
 Plugin 'groenewege/vim-less'
 
@@ -215,6 +209,7 @@ Plugin 'guileen/vim-node'
 
 "Git配置"
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter.git'
 
 "Tagbar
 Plugin 'majutsushi/tagbar'
@@ -401,6 +396,8 @@ augroup END
 let g:user_emmet_expandabbr_key = '<c-e>'
 
 
+"Vue语法判断插件
+Plugin 'posva/vim-vue'
 "Vue语法判断插件
 augroup vuegroup
 	autocmd!
