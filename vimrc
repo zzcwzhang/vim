@@ -305,7 +305,7 @@ nnoremap H ^
 vnoremap g y/<C-r>0<cr> "快速查找当前选择的部分
 
 "折叠
-set foldmethod=indent
+set foldmethod=manual
 set foldlevel=99
 set nocompatible              " required
 "开启文件类型匹配"
