@@ -118,6 +118,20 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "js补全
 Plugin 'ternjs/tern_for_vim'
 
+"React
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+
+Plugin 'styled-components/vim-styled-components'
+Plugin 'maxmellon/vim-jsx-pretty'
+
 " -----------------------------------------------
 " 代码注释
 " -----------------------------------------------
@@ -196,8 +210,6 @@ Plugin 'Blackrush/vim-gocode'
 
 "html xml自动闭合标签
 Plugin 'docunext/closetag.vim'
-Plugin 'pangloss/vim-javascript'
-" Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'AutoClose'
 "swift
 Plugin 'toyamarinyon/vim-swift'
@@ -349,6 +361,9 @@ nnoremap <Leader>bd :!python2 /Users/apple/baidu.py<cr>
 
 "使用有道查找当前光标单词
 nnoremap <Leader>yd :!python2 /Users/apple/youdao.py <cword><cr>
+
+"Y复制到系统粘贴板
+vnoremap Y "+y
 
 "强化退出
 inoremap jk <esc>
