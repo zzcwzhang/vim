@@ -365,6 +365,9 @@ nnoremap <Leader>yd :!python2 /Users/apple/youdao.py <cword><cr>
 "Y复制到系统粘贴板
 vnoremap Y "+y
 
+"json格式化 需要brew install jq
+com! JsonFormat %!jq .
+
 "强化退出
 inoremap jk <esc>
 
@@ -543,5 +546,20 @@ augroup self
 		let l:a = a:num / 12.0
 		return printf('%.2fvw',l:a)
 	endfunction
+	"JSON格式化
+	function! FormatJson()
+python << EOF
+import vim
+import json
+try:
+    buf = vim.current.buffer
+    json_content = '\n'.join(buf[:])
+    content = json.loads(json_content)
+    sorted_content = json.dumps(content, indent=4, sort_keys=True)
+    buf[:] = sorted_content.split('\n')
+except Exception, e:
+    print e
+EOF
+endfunction
 augroup END
 
