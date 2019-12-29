@@ -115,12 +115,8 @@ let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
-"js补全
-Plugin 'ternjs/tern_for_vim'
-
 "React
 Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
@@ -317,7 +313,7 @@ nnoremap H ^
 vnoremap g y/<C-r>0<cr> "快速查找当前选择的部分
 
 "折叠
-set foldmethod=manual
+" set foldmethod=manual
 set foldlevel=99
 set nocompatible              " required
 "开启文件类型匹配"
@@ -535,7 +531,11 @@ augroup node
 	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
 augroup END
 
-
+"Vim
+augroup vim
+	autocmd!
+	autocmd FileType vim nnoremap <buffer> <F5> :source %<cr>
+augroup END
 
 "自定义函数
 augroup self
