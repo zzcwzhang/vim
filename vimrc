@@ -125,8 +125,11 @@ augroup javascript_folding
     au FileType javascript setlocal foldmethod=syntax
 augroup END
 
-Plugin 'styled-components/vim-styled-components'
 Plugin 'maxmellon/vim-jsx-pretty'
+
+Plugin 'styled-components/vim-styled-components'
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 " -----------------------------------------------
 " 代码注释
