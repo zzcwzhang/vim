@@ -73,8 +73,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 " Optional:
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-h>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -362,7 +362,16 @@ nnoremap <Leader>bd :!python2 /Users/apple/baidu.py<cr>
 nnoremap <Leader>yd :!python2 /Users/apple/youdao.py <cword><cr>
 
 "Y复制到系统粘贴板
-vnoremap Y "+y
+vnoremap gy "+y
+nnoremap gp "+p
+
+"使用黑洞寄存器删除
+nnoremap D "_dd
+vnoremap D "_d
+
+"删除当前行到黑洞并用粘贴
+nnoremap P "_ddP
+vnoremap P "_dP
 
 "json格式化 需要brew install jq
 com! JsonFormat %!jq .
