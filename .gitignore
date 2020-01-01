@@ -1,5 +1,6 @@
 after/
 bundle/
+!bundle/vim-snippets/snippets/javascript/
 dict/
 ftplugin/
 plugin/
