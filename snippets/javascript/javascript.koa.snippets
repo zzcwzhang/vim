@@ -1,0 +1,33 @@
+snippet kpost
+	.post('/${1}', async function(ctx) {
+		ctx.body = {
+			success: true,
+			info: '${2}',
+			data: ${3},
+		}
+	})
+
+snippet kget
+	.get('/${1}', async function(ctx) {
+		ctx.body = {
+			success: true,
+			info: '${2}',
+			data: ${3},
+		}
+	})
+
+snippet rq
+	const ${1} = require('${2}');
+
+snippet vroute
+	{
+		path: '/${1}',
+		name: '$1',
+		component: resolve => require(['@/views/$1'], resolve),
+	},
+
+snippet me 
+	module.exports = {
+		${1}
+	}
+

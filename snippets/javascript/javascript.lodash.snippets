@@ -1,0 +1,8 @@
+# lodash
+snippet .t
+	.tap((v) => { console.log('$1', v); })
+
+snippet _.c
+	_.chain($1)
+		.$2
+		.value();

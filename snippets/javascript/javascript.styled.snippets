@@ -1,0 +1,109 @@
+snippet bg+
+	background: #${1:FFF} url(${2}) ${3:0} ${4:0} ${0:no-repeat};
+snippet bgc
+	background-color: #${0:FFF};
+snippet bgi
+	background-image: url(${0});
+
+snippet bd+
+	border: ${1:1px} ${2:solid} #${0:000};
+
+
+snippet bdb+
+	border-bottom: ${1:1px} ${2:solid} #${0:000};
+
+snippet bdl+
+	border-left: ${1:1px} ${2:solid} #${0:000};
+
+snippet bdr+
+	border-right: ${1:1px} ${2:solid} #${0:000};
+
+snippet bdt+
+	border-top: ${1:1px} ${2:solid} #${0:000};
+
+snippet cur:p
+	cursor: pointer;
+
+snippet fz
+	font-size: ${0};
+
+snippet fw
+	font-weight: ${0};
+
+snippet fw:b
+	font-weight: bold;
+	font-weight: bolder;
+
+snippet w
+	width: ${0};
+snippet maw
+	max-width: ${0};
+
+snippet h
+	height: ${0};
+snippet mah
+	max-height: ${0};
+
+snippet mb
+	margin-bottom: ${0};
+snippet ml
+	margin-left: ${0};
+snippet mr
+	margin-right: ${0};
+snippet mt
+	margin-top: ${0};
+snippet m
+	margin: ${0};
+
+snippet pb
+	padding-bottom: ${0};
+snippet pl
+	padding-left: ${0};
+snippet pr
+	padding-right: ${0};
+snippet pt
+	padding-top: ${0};
+snippet p
+	padding: ${0};
+
+snippet pos
+	position: ${0};
+snippet pos:a
+	position: absolute;
+snippet pos:f
+	position: fixed;
+snippet pos:r
+	position: relative;
+snippet pos:s
+	position: static;
+
+snippet op
+	opacity: ${0};
+
+snippet z
+	z-index: ${0};
+
+snippet ffs
+	flex-start
+snippet ffe
+	flex-end
+snippet fsb
+	space-between
+snippet fsa
+	space-around
+
+snippet $pt
+	${props => ( props.theme.$1 )}
+snippet $p
+	${props => ( props.$1 ? props.$1 : $2 )}
+
+snippet $b
+	${breakpoint('tablet')\`
+	$1
+	\`}
+
+snippet df
+	display: flex;
+	flex-direction: row | column;
+	justify-content: space-between;
+	align-items: center;
