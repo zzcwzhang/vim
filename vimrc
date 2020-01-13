@@ -20,6 +20,15 @@
 let mapleader=","
 set mouse=a
 
+set nocompatible
+set nobackup
+set noswapfile
+
+set history=100
+
+" 缓冲文件swp swo等
+set directory=/tmp "存放路径
+
 "中文编码
 set encoding=utf-8
 let &termencoding=&encoding
@@ -534,6 +543,15 @@ augroup END
 
 "  }}} -语言配置 END
 
+"Js eslint"
+function! EslintShow()
+	let output = system("yarn eslint " . bufname("%"))
+	vsplit __Eslinet_Output__
+	normal! ggdG
+	setlocal filetype=eslintoutput
+	setlocal buftype=nofile
+	call append(0,split(output,'\v\n'))
+endfunction
 
 "Node
 augroup node
@@ -541,7 +559,9 @@ augroup node
 	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
 	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
 	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
+	autocmd FileType javascript nnoremap <buffer> <F7> :call EslintShow()<cr>
 augroup END
+
 
 "Vim
 augroup vim

@@ -1,5 +1,13 @@
+snippet cs
+	const $1 = styled.div\`
+		$2
+	\`;
+
 snippet imc
 	import $1 from 'components/$1';
+
+snippet imo
+	import hash from 'object-hash';
 
 snippet imh
 	import $1 from 'hooks/$1';
@@ -28,152 +36,16 @@ snippet uM
 		${2}
 	});
 
-snippet spage 
-	import _ from 'lodash';
-	import React from 'react';
-	import styled from 'styled-components';
-	import breakpoint from 'styled-components-breakpoint';
-	import CenteredContent, { Page } from 'components/CenteredContent';
-
-	class $1 extends React.Component {
-		render() {
-			const { children, ...rest } = this.props;
-			return (
-				<Page>
-					<CenteredContent backgroundTheme="grey">
-						<Wrapper>
-							HelloWorld
-						</Wrapper>
-					</CenteredContent>
-				</Page>
-				);
-		}
-	}
-
-	const Wrapper = styled.div\`
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		align-items: center;
-		background-color: #FFF;
-		height: 100%;
-		${breakpoint('tablet')\`
-			min-height: calc(100vh - 56px);
-
-		\`};
-	\`;
-	export default $1;
-
-snippet scom
-	import React from 'react';
-	import styled from 'styled-components';
-
-	class $1 extends React.Component {
-		render() {
-			const { children, ...rest } = this.props;
-			return (
-				<Wrapper {...rest}>
-					<div>{children}</div>
-				</Wrapper>
-			);
-		}
-	}
-
-	const Wrapper = styled.div\`
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		align-items: center;
-	\`;
-	export default $1;
-
 snippet ir
 	import React from 'react';
-snippet irc
-	import React, {Component} from 'react';
-snippet ird
-	import ReactDOM from 'react-dom';
-snippet cdm
-	componentDidMount() {
-		${1}
-	}
-snippet cdup
-	componentDidUpdate(prevProps, prevState) {
-		${1}
-	}
-snippet cwm
-	componentWillMount() {
-		${1}
-	}
-snippet cwr
-	componentWillReceiveProps(nextProps) {
-		${1}
-	}
-snippet cwun
-	componentWillUnmount() {
-		${1}
-	}
-snippet cwu
-	componentWillUpdate(nextProps, nextState) {
-		${1}
-	}
-snippet fup
-	forceUpdate(${1:callback});
-snippet dp
-	static defaultProps = {
-		${1}: ${2},
-	}
-snippet st
-	state = {
-		${1}: ${2},
-	}
-snippet pt
-	static propTypes = {
-		${1}: React.PropTypes.${2:type},
-	}
-snippet rcc
-	class ${1:ClassName} extends React.Component {
-		render() {
-			return (
-				${0:<div />}
-			);
-		}
-	}
-snippet rdr
-	ReactDOM.render(${1}, ${2})
-snippet ercc
-	export default class ${1:ClassName} extends React.Component {
-		render() {
-			return (
-				${0:<div />}
-			);
-		}
-	}
-snippet ctor
-	constructor() {
-		super();
-		${1}
-	}
-snippet ren
-	render() {
-		return (
-			${1:<div />}
-		);
-	}
-snippet sst
-	this.setState({
-		${1}: ${2}
-	});
-snippet scu
-	shouldComponentUpdate(nextProps, nextState) {
-		${1}
-	}
-snippet prp i
-	this.props.${1}
-snippet ste i
-	this.state.${1}
+
 snippet {*
 	{/* $1 */
+
+snippet imsb
+	import styled from 'styled-components';
+	import breakpoint from 'styled-components-breakpoint';
+
 
 snippet shook
 	import _ from 'lodash';
@@ -207,54 +79,43 @@ snippet shook
 
 snippet shookpage
 	import _ from 'lodash';
+	import React, { useState, useCallback, useMemo, useEffect } from 'react';
+	import { Switch, Route } from 'react-router-dom';
 	import styled from 'styled-components';
+
 	import CenteredContent, { Page } from 'components/CenteredContent';
 	import LoadingPlaceholder from 'components/LoadingPlaceholder';
-	import Layout, { LayoutTitle } from '../components/Layout';
-	import React, { useState, useCallback, useMemo, useEffect } from 'react';
-	import Space from 'shared/components/Space';
+	import Header from 'components/Header';
 
-	import { Switch, Route } from 'react-router-dom';
-	import useRouter from 'hooks/useRouter';
-	import autoGoBack from 'utils/autoGoBack';
-
+	import useRouter from 'shared/hooks/useRouter';
 	// child router
-	import CustomEdit from './CustomEdit';
-
+	import ChildrenPage from 'some/page/ChildrenPage';
 
 	export default function $1(props) {
 		// 路由
 		const router = useRouter();
-		const { path, url } = router.match;
-		const handleGoBack = autoGoBack(router.history);
-
-		const { data, ...rest } = props;
-		const [index, setIndex] = useState(0);
+		const { path, url } = router;
 
 		useEffect(() => {
+			// ...
+		}, [])
 
-		}, [data])
-
-		const { path, url } = useRouteMatch();
 
 		return (
 			<Page>
 				<CenteredContent backgroundTheme="grey">
-					<Layout onGoBackLinkClick={handleGoBack}>
-						<LayoutTitle>页面标题</LayoutTitle>
-						<Wrapper>
-							<Space h={32} />
-							<Switch>
-								{/* 默认路由 */ }
-								<Route exact path={path}>
-									<LoadingPlaceholder />
-								</Route>
-								<Route exact={true} path={\`${url}/child1\`}>
-									<CustomEdit />
-								</Route>
-							</Switch>
-						</Wrapper>
-					</Layout>
+					<Header title="标题" alwaysShowTitle />
+					<Wrapper>
+						<Switch>
+							{/* 默认路由 */ }
+							<Route exact path={path}>
+								<LoadingPlaceholder />
+							</Route>
+							<Route exact={true} path={\`${url}/child1\`}>
+								<ChildrenPage />
+							</Route>
+						</Switch>
+					</Wrapper>
 				</CenteredContent>
 			</Page>
 		)
@@ -262,7 +123,10 @@ snippet shookpage
 
 	const Wrapper = styled.div\`
 		width: 100%;
+		padding: 20px;
+		height: calc(100vh - 49px);
 	\`;
+
 
 snippet useAntdModal
 	import _ from 'lodash';
@@ -310,3 +174,8 @@ snippet useAntdModal
 	const Wrapper = styled.div\`
 		width: 100%;
 	\`;
+
+snippet sdiv
+	const $1 = styled.div\`
+		${2}
+	\`

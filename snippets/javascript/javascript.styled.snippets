@@ -1,3 +1,6 @@
+snippet s=
+	style={{ $1 }}
+
 snippet bg+
 	background: #${1:FFF} url(${2}) ${3:0} ${4:0} ${0:no-repeat};
 snippet bgc
@@ -8,6 +11,17 @@ snippet bgi
 snippet bd+
 	border: ${1:1px} ${2:solid} #${0:000};
 
+snippet ios:b
+	env(safe-area-inset-bottom)
+
+snippet ios:t
+	env(safe-area-inset-top)
+
+snippet ios:l
+	env(safe-area-inset-left)
+
+snippet ios:r
+	env(safe-area-inset-right)
 
 snippet bdb+
 	border-bottom: ${1:1px} ${2:solid} #${0:000};
@@ -107,3 +121,13 @@ snippet df
 	flex-direction: row | column;
 	justify-content: space-between;
 	align-items: center;
+
+snippet dg
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 150px);
+	grid-auto-flow: row dense;
+	grid-gap: 20px 20px;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
