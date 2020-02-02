@@ -83,7 +83,7 @@ Plugin 'honza/vim-snippets'
 " Optional:
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
-let g:UltiSnipsJumpForwardTrigger="<c-h>"
+let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -127,8 +127,8 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "React
 Plugin 'pangloss/vim-javascript'
 let g:jsx_ext_required = 0
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
+let g:javascript_plugin_jsdoc = 0
+let g:javascript_plugin_flow = 0
 augroup javascript_folding
     au!
     au FileType javascript setlocal foldmethod=syntax
@@ -261,6 +261,10 @@ augroup END
 
 "前端配置"
 Plugin 'mattn/emmet-vim'
+
+"代码自动格式化
+"https://github.com/prettier/vim-prettier
+Plugin 'prettier/vim-prettier'
 
 "stylus支持
 Plugin 'wavded/vim-stylus.git'
@@ -445,6 +449,20 @@ augroup vuegroup
 	autocmd FileType vue nnoremap <leader>j :set ft=javascript<cr>
 augroup END
 
+augroup reactgroup
+	autocmd BufWritePre *.js :Prettier
+augroup END
+
+"Node
+augroup node
+	autocmd!
+	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
+	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
+	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
+	autocmd FileType javascript nnoremap <buffer> <F7> :call EslintShow()<cr>
+augroup END
+
+
 "html
 augroup htmlgroup
 	autocmd!
@@ -552,16 +570,6 @@ function! EslintShow()
 	setlocal buftype=nofile
 	call append(0,split(output,'\v\n'))
 endfunction
-
-"Node
-augroup node
-	autocmd!
-	autocmd FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
-	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
-	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
-	autocmd FileType javascript nnoremap <buffer> <F7> :call EslintShow()<cr>
-augroup END
-
 
 "Vim
 augroup vim

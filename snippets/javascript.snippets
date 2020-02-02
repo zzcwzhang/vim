@@ -24,3 +24,13 @@ snippet /f
 	// FIXME
 snippet /t
 	// TODO
+
+snippet pwait
+	const wait = (second) => new Promise( (resolve, reject) => {
+		console.log('begin wait')
+		setTimeout(() => {
+			console.log('end wait')
+			resolve(true);
+		}, second * 1000)
+	});
+
