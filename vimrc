@@ -125,14 +125,14 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 "React
-Plugin 'pangloss/vim-javascript'
-let g:jsx_ext_required = 0
-let g:javascript_plugin_jsdoc = 0
-let g:javascript_plugin_flow = 0
-augroup javascript_folding
-    au!
-    au FileType javascript setlocal foldmethod=syntax
-augroup END
+" Plugin 'pangloss/vim-javascript'
+" let g:jsx_ext_required = 0
+" let g:javascript_plugin_jsdoc = 0
+" let g:javascript_plugin_flow = 0
+" augroup javascript_folding
+"     au!
+"     au FileType javascript setlocal foldmethod=syntax
+" augroup END
 
 Plugin 'maxmellon/vim-jsx-pretty'
 
