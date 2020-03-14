@@ -107,9 +107,9 @@ snippet fsa
 	space-around
 
 snippet $pt
-	${props => ( props.theme.$1 )}
+	${props => (props.theme.$1)}
 snippet $p
-	${props => ( props.$1 ? props.$1 : $2 )}
+	${props => (props.$1 ? props.$1 : $2)}
 
 snippet $b
 	${breakpoint('tablet')\`
@@ -124,10 +124,14 @@ snippet df
 
 snippet dg
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 150px);
+	grid-template-columns: 50px  max-content;
+	grid-template-rows: max-content max-content;
+	grid-template-areas:
+	"area-icon area-header"
+	"area-menu area-content";
 	grid-auto-flow: row dense;
-	grid-gap: 20px 20px;
-	justify-items: center;
+	grid-gap: 20px;
+	justify-content: stretch;
+	justify-items: start;
+	align-content: stretch;
 	align-items: center;
-	justify-content: center;
-	align-content: center;

@@ -5,43 +5,44 @@ snippet cs
 
 snippet imc
 	import $1 from 'components/$1';
-
 snippet imo
 	import hash from 'object-hash';
-
 snippet imh
 	import $1 from 'hooks/$1';
-
 snippet imsc
 	import $1 from 'shared/components/$1';
-
 snippet imsh
 	import $1 from 'shared/hooks/$1';
-
+snippet imsu
+	import $1 from 'shared/utils/$1';
+snippet imicon
+	import { $1 } from 'outlines-icons';
+snippet imob
+	import { useObserver } from 'mobx-react';
+	import { unstable_batchedUpdates } from 'react-dom';
 snippet uS
 	const [$1, set$1] = useState($2);
-
 snippet uE
 	useEffect(() => {
 		$1
-	})
-
+	});
+snippet uEv
+	useEffect(() => {
+		console.info('$1 update:', $1);
+	}, [$1]);
 snippet uC
 	const $1 = useCallback(() => {
 		$2
 	});
-
 snippet uM
 	const ${1} = useMemo(() => {
 		${2}
 	});
-
 snippet ir
 	import React from 'react';
 
-snippet {*
-	{/* $1 */
-
+snippet h//
+	{/* $1 */}
 snippet imsb
 	import styled from 'styled-components';
 	import breakpoint from 'styled-components-breakpoint';
@@ -69,8 +70,8 @@ snippet shook
 				{index}
 				<button onClick={handleClick}>click</button>
 			</Wrapper>
-		)
-	};
+		);
+	}
 
 	const Wrapper = styled.div\`
 		width: 100%;
@@ -118,8 +119,8 @@ snippet shookpage
 					</Wrapper>
 				</CenteredContent>
 			</Page>
-		)
-	};
+		);
+	}
 
 	const Wrapper = styled.div\`
 		width: 100%;
@@ -169,7 +170,7 @@ snippet useAntdModal
 		), [data, visible, handleSubmit]);
 
 		return [dom, turnOn, turnOff];
-	};
+	}
 
 	const Wrapper = styled.div\`
 		width: 100%;
@@ -179,3 +180,20 @@ snippet sdiv
 	const $1 = styled.div\`
 		${2}
 	\`
+
+snippet sicon
+	import React from "react";
+	import Icon from "./Icon";
+	import type { Props } from "./Icon";
+
+	export default function IconFont(props) {
+		return (
+		<Icon {...props}>
+			$1
+		</Icon>
+		);
+	}
+
+snippet esline
+	/* eslint-disable-next-line */
+

@@ -383,7 +383,6 @@ nnoremap D "_dd
 vnoremap D "_d
 
 "删除当前行到黑洞并用粘贴
-nnoremap P "_ddP
 vnoremap P "_dP
 
 "json格式化 需要brew install jq
@@ -563,7 +562,7 @@ augroup END
 
 "Js eslint"
 function! EslintShow()
-	let output = system("yarn eslint " . bufname("%"))
+	let output = system("eslint " . bufname("%"))
 	vsplit __Eslinet_Output__
 	normal! ggdG
 	setlocal filetype=eslintoutput
