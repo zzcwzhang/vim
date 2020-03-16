@@ -133,7 +133,6 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "     au!
 "     au FileType javascript setlocal foldmethod=syntax
 " augroup END
-
 Plugin 'maxmellon/vim-jsx-pretty'
 
 Plugin 'styled-components/vim-styled-components'
@@ -448,9 +447,10 @@ augroup vuegroup
 	autocmd FileType vue nnoremap <leader>j :set ft=javascript<cr>
 augroup END
 
-augroup reactgroup
-	autocmd BufWritePre *.js :Prettier
-augroup END
+" 会导致自动把单引号变成双引号
+" augroup reactgroup
+	" autocmd BufWritePre *.js :Prettier
+" augroup END
 
 "Node
 augroup node
