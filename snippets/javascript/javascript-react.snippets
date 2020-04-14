@@ -76,8 +76,37 @@ snippet shook
 	const Wrapper = styled.div\`
 		width: 100%;
 	\`;
+snippet sshook
+	import _ from 'lodash';
+	import styled from 'styled-components';
+	import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
+	export default function useBase(props = {}) {
+		const { data = 'this is Data', onChange = console.info, ...rest } = props;
 
+		const [index, setIndex] = useState(1);
+
+		const setDefaultValue = useCallback((_def) => {
+			setIndex(_def);
+		}, []);
+
+		useEffect(() => {
+			onChange(index)
+		}, [index]);
+
+		const node = _(
+			<Wrapper {...rest} >
+				{data}{index}
+				<button onClick={() => { setIndex(index + 1); }}>click</button>
+			</Wrapper>
+		);
+
+		return [node, setDefaultValue];
+	}
+
+	const Wrapper = styled.div\`
+		width: 100%;
+	\`;
 snippet shookpage
 	import _ from 'lodash';
 	import React, { useState, useCallback, useMemo, useEffect } from 'react';
@@ -175,7 +204,46 @@ snippet useAntdModal
 	const Wrapper = styled.div\`
 		width: 100%;
 	\`;
+snippet selfControlComponent
+	import _ from 'lodash';
+	import styled from 'styled-components';
+	import React, { useState, useCallback, useMemo, useEffect } from 'react';
+	import { useArray, usePrevious } from 'react-hanger';
 
+	export default function $1(props = {}) {
+		const { defaultValue = null, resetFlag = '', onChange = console.log, ...rest } = props;
+
+		const prevRestFlag = usePrevious(resetFlag);
+
+		const _ary = useArray([]);
+
+		// 父组件设置默认值
+		useEffect(() => {
+			if (resetFlag !== prevRestFlag) {
+				_ary.setValue(defaultValue);
+			}
+		}, [resetFlag, prevRestFlag,  JSON.stringify(defaultValue)]);
+
+		// 给父组件返回值
+		useEffect(() => {
+			let errorMsg = '';
+			if (resetFlag === prevRestFlag) {
+				if (_.size(_ary.value) === 0) {
+					errorMsg = '列表不能为空';
+				}
+				onChange(_ary.value,  errorMsg);
+			}
+		}, [resetFlag, prevRestFlag, _ary]);
+
+		return (
+			<Wrapper {...rest} >
+				{JSON.stringify(_ary.value)}
+			</Wrapper>
+		);
+	}
+	const Wrapper = styled.div\`
+		width: 100%;
+	\`;
 snippet sdiv
 	const $1 = styled.div\`
 		${2}
@@ -193,6 +261,29 @@ snippet sicon
 		</Icon>
 		);
 	}
+
+snippet initByTeamId
+	const [teamId, setTeamId] = useState('');
+
+	const isLoaded = useBoolean(false);
+
+	const isFetching = useBoolean(false);
+
+	const initByTeamId = useCallback((_teamId, focus = false) => {
+		if (_teamId && _teamId !== teamId) {
+			setTeamId(_teamId);
+			if (!isFetching.value && (!isLoaded.value || focus)) {
+				isFetching.setTrue();
+				// do fetch area 
+				someFetch({ teamId: _teamId }).then(res => {
+					// do something
+				});
+
+				isLoaded.setTrue();
+				isFetching.setFalse();
+			}
+		}
+	}, []);
 
 snippet esline
 	/* eslint-disable-next-line */

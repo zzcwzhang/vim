@@ -125,6 +125,7 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 "React
+Plugin 'neoclide/vim-jsx-improve'
 " Plugin 'pangloss/vim-javascript'
 " let g:jsx_ext_required = 0
 " let g:javascript_plugin_jsdoc = 0
@@ -133,8 +134,9 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "     au!
 "     au FileType javascript setlocal foldmethod=syntax
 " augroup END
-Plugin 'maxmellon/vim-jsx-pretty'
 
+" 会导致页面卡顿
+" Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'styled-components/vim-styled-components'
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -235,7 +237,7 @@ Plugin 'majutsushi/tagbar'
 let g:tagbar_ctags_bin='/usr/bin/ctags'
 let g:tagbar_width=30
 let g:tagbar_right=1
-map <F8> :TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
 
 
 "符号自动环绕
@@ -447,10 +449,33 @@ augroup vuegroup
 	autocmd FileType vue nnoremap <leader>j :set ft=javascript<cr>
 augroup END
 
-" 会导致自动把单引号变成双引号
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#jsx_single_quote = 'true'
+let g:prettier#config#print_width = '100'
+let g:prettier#config#bracket_spacing = 'true'
+
+" 会导致eslint冲突
 " augroup reactgroup
-	" autocmd BufWritePre *.js :Prettier
+"   autocmd BufWritePre *.js :Prettier
 " augroup END
+nnoremap <F2> :Prettier<CR>
+
+"复制当前选中的文本到一个新的临时Buffer
+function! BufferTemporary()
+	let [line_start, column_start] = getpos("'<")[1:2]
+	let [line_end, column_end] = getpos("'>")[1:2]
+	let lines = getline(line_start, line_end)
+	if len(lines) == 0
+		return ''
+	endif
+	let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+	let lines[0] = lines[0][column_start - 1:]
+	vsplit __Buffer_Temporary__
+	normal! ggdG
+	setlocal filetype=javascript
+	setlocal buftype=nofile
+	call append(0, lines)
+endfunction
 
 "Node
 augroup node
@@ -459,8 +484,8 @@ augroup node
 	autocmd FileType javascript nnoremap <buffer> <F5> :!node %<cr>
 	autocmd FileType javascript nnoremap <buffer> <F6> :!mocha %<cr>
 	autocmd FileType javascript nnoremap <buffer> <F7> :call EslintShow()<cr>
+	autocmd FileType javascript vnoremap <buffer> B :call BufferTemporary()<cr>
 augroup END
-
 
 "html
 augroup htmlgroup
