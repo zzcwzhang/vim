@@ -1,3 +1,10 @@
+" 自动安装vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 "单词修复与扩展"
 :iabbrev retrun return
 :iabbrev cosnt const
@@ -43,20 +50,14 @@ let &t_EI.="\e[1 q"
 
 
 "加载插件
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" 代码格式化
-Plugin 'Chiel92/vim-autoformat'
-noremap <F3> :Autoformat<CR>
-let g:formatdef_my_custom_vue = '"vue-beautify -s 2"'
-let g:formatters_vue = ['my_custom_vue']
+call plug#begin('~/.vim/plugged')
+Plug 'chemzqm/vim-jsx-improve'
 
 " Ack代替grep
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 
 "括号匹配
-Plugin 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_conf = {
 			\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
@@ -74,12 +75,9 @@ let g:rainbow_conf = {
 
 
 "代码片段
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
 " 使用新版的代码片段引擎
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " Optional:
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
@@ -88,45 +86,13 @@ let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-
-"YcuCompleteMe"
-Plugin 'Valloric/YouCompleteMe'
-"YcuCompleteMe"
-" 自动补全配置
-set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
-"上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
-"youcompleteme  默认tab  s-tab 和自动补全冲突
-let g:ycm_key_list_select_completion=['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion=['<c-p>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
-
-let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
-let g:ycm_min_num_of_chars_for_completion=2	" 从第2个键入字符就开始罗列匹配项
-let g:ycm_cache_omnifunc=0	" 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_seed_identifiers_with_syntax=1	" 语法关键字补全
-nnoremap <leader>ll :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
-nnoremap <leader>lo :lopen<CR>	"open locationlist
-nnoremap <leader>lc :lclose<CR>	"close locationlist
-inoremap <leader><leader> <C-x><C-o>
-"在注释输入中也能补全
-let g:ycm_complete_in_comments = 1
-"在字符串输入中也能补全
-let g:ycm_complete_in_strings = 1
-"注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
-
 "React
-Plugin 'neoclide/vim-jsx-improve'
-" Plugin 'pangloss/vim-javascript'
+" 这个插件对jsx支持良好但是会导致普通的js {} 换行时缩进错位
+" Plug 'neoclide/vim-jsx-improve' 
+"
+
+" 这个插件会导致非常卡顿
+" Plug 'pangloss/vim-javascript'
 " let g:jsx_ext_required = 0
 " let g:javascript_plugin_jsdoc = 0
 " let g:javascript_plugin_flow = 0
@@ -136,8 +102,9 @@ Plugin 'neoclide/vim-jsx-improve'
 " augroup END
 
 " 会导致页面卡顿
-" Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'styled-components/vim-styled-components'
+" Plug 'maxmellon/vim-jsx-pretty'
+
+Plug 'styled-components/vim-styled-components'
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
@@ -148,7 +115,7 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 "  <leader>cu 揭开注视
 "  <leader>c<space> 加上/解开注释，智能判断
 "  <leader>cy 先复制， 在注释（p可以进行黏贴
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
@@ -163,12 +130,12 @@ let g:NERDDefaultNesting = 1
 
 
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'gmarik/Vundle.vim'
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
 
 "目录级搜索
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 "快捷键
 let g:ctrlp_map = '<Leader>p'
 let g:ctrlp_cmd = 'CtrlP'
@@ -187,13 +154,13 @@ let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_line_prefix = '♪ '
 
 
-Plugin 'https://github.com/Lokaltog/vim-powerline.git'
+Plug 'https://github.com/Lokaltog/vim-powerline.git'
 
 
 "文件树
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 nnoremap <leader>mt :NERDTreeToggle<CR>
 "NERDTree导航设置"
 let g:NERDTreeIndicatorMapCustom = {
@@ -211,29 +178,47 @@ let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp'] "忽略以下文件
 let NERDTreeShowLinenumbers = 1 "设置行号
 let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTree
 
-Plugin 'isRuslan/vim-es6'
-Plugin 'groenewege/vim-less'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+fun! GoCoc()
+    inoremap <buffer> <silent><expr> <TAB>
+                \ pumvisible() ? "\<C-n>" :
+                \ <SID>check_back_space() ? "\<TAB>" :
+                \ coc#refresh()
+
+    inoremap <buffer> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    inoremap <buffer> <silent><expr> <C-space> coc#refresh()
+
+    " GoTo code navigation.
+    nmap <buffer> <leader>gd <Plug>(coc-definition)
+		nmap <buffer> <leader>gy <Plug>(coc-type-definition)
+		nmap <buffer> <leader>gi <Plug>(coc-implementation)
+    nmap <buffer> <leader>gr <Plug>(coc-references)
+    nnoremap <buffer> <leader>cr :CocRestart
+endfun
+autocmd FileType javascript :call GoCoc()
+
+Plug 'isRuslan/vim-es6'
+Plug 'groenewege/vim-less'
 
 "Go 代码高亮和检测
-Plugin 'Blackrush/vim-gocode'
+Plug 'Blackrush/vim-gocode'
 
 "html xml自动闭合标签
-Plugin 'docunext/closetag.vim'
-Plugin 'AutoClose'
+Plug 'docunext/closetag.vim'
 "swift
-Plugin 'toyamarinyon/vim-swift'
+Plug 'toyamarinyon/vim-swift'
 "java
-Plugin 'vim-scripts/javacomplete'
+Plug 'vim-scripts/javacomplete'
 "nodeJs
-Plugin 'jamescarr/snipmate-nodejs'
-Plugin 'guileen/vim-node'
+Plug 'jamescarr/snipmate-nodejs'
+Plug 'guileen/vim-node'
 
 "Git配置"
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter.git'
+Plug 'tpope/vim-fugitive'
+" Plug 'airblade/vim-gitgutter.git'
 
 "Tagbar
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 let g:tagbar_ctags_bin='/usr/bin/ctags'
 let g:tagbar_width=30
 let g:tagbar_right=1
@@ -241,15 +226,14 @@ nnoremap <F9> :TagbarToggle<CR>
 
 
 "符号自动环绕
-Plugin 'tpope/vim-surround'
-
+" Plug 'tpope/vim-surround'
 
 " Markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'junegunn/goyo.vim'
-Plugin 'iamcco/mathjax-support-for-mkdp'
-Plugin 'iamcco/markdown-preview.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/goyo.vim'
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
 nnoremap <silent> <leader>d :Goyo<cr>
 let g:mkdp_path_to_chrome="chrom"
 let g:mkdp_auto_close=0
@@ -261,14 +245,11 @@ augroup END
 
 
 "前端配置"
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 "代码自动格式化
 "https://github.com/prettier/vim-prettier
-Plugin 'prettier/vim-prettier'
-
-"stylus支持
-Plugin 'wavded/vim-stylus.git'
+Plug 'prettier/vim-prettier'
 
 " augroup filetype_web
 "		autocmd!
@@ -292,10 +273,6 @@ let g:Powerline_symbols = 'unicode'
 nnoremap <Leader>md :TagbarToggle<CR>
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 let g:tagbar_ctags_bin='ctags'
-
-call vundle#end()
-filetype plugin indent on
-
 
 set nocompatible "使用非兼容模式，就不会默认为vi模式了"
 
@@ -436,7 +413,7 @@ let g:user_emmet_expandabbr_key = '<c-e>'
 
 
 "Vue语法判断插件
-Plugin 'posva/vim-vue'
+Plug 'posva/vim-vue'
 "Vue语法判断插件
 augroup vuegroup
 	autocmd!
@@ -601,6 +578,7 @@ augroup vim
 	autocmd FileType vim nnoremap <buffer> <F5> :source %<cr>
 augroup END
 
+call plug#end()
 "自定义函数
 augroup self
 	autocmd!
