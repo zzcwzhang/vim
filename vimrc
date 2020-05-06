@@ -186,7 +186,7 @@ let g:rainbow_conf = {
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 " Optional:
-let g:UltiSnipsExpandTrigger="<space>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 
@@ -284,13 +284,13 @@ let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTr
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 fun! GoCoc()
-    inoremap <buffer> <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
+    " inoremap <buffer> <silent><expr> <TAB>
+    "             \ pumvisible() ? "\<C-n>" :
+    "             \ <SID>check_back_space() ? "\<TAB>" :
+    "             \ coc#refresh()
 
-    inoremap <buffer> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    inoremap <buffer> <silent><expr> <C-space> coc#refresh()
+    " inoremap <buffer> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    " inoremap <buffer> <silent><expr> <C-space> coc#refresh()
 
     " GoTo code navigation.
     nmap <buffer> <leader>gd <Plug>(coc-definition)
