@@ -170,23 +170,6 @@ Plug 'mileszs/ack.vim'
 " 括号自动环绕
 Plug 'tpope/vim-surround'
 
-"括号匹配
-Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1
-let g:rainbow_conf = {
-			\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-			\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-			\   'operators': '_,\|+\|-_',
-			\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-			\   'separately': {
-			\       '*': {},
-			\       'tex': {
-			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-			\       },
-			\       'css': 0,
-			\   }
-			\}
-
 "代码片段
 " 使用新版的代码片段引擎
 Plug 'SirVer/ultisnips'
@@ -273,7 +256,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 nnoremap <leader>mt :NERDTreeToggle<CR>
 "NERDTree导航设置"
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom= {
 			\ "Modified"  : "✹",
 			\ "Staged"    : "✚",
 			\ "Untracked" : "✭",
@@ -288,128 +271,6 @@ let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp'] "忽略以下文件
 let NERDTreeShowLinenumbers = 1 "设置行号
 let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTree
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-fun! GoCoc()
-	" Use tab for trigger completion with characters ahead and navigate.
-	" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-	" other plugin before putting this into your config.
-	" inoremap <silent><expr> <TAB>
-	"       \ pumvisible() ? "\<C-n>" :
-	"       \ <SID>check_back_space() ? "\<TAB>" :
-	"       \ coc#refresh()
-	" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-	" Use <c-space> to trigger completion.
-	inoremap <silent><expr> <c-space> coc#refresh()
-
-	" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-	" position. Coc only does snippet and additional edit on confirm.
-	" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-	if exists('*complete_info')
-		inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-	else
-		inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-	endif
-
-	" Use `[g` and `]g` to navigate diagnostics
-	nmap <silent> [g <Plug>(coc-diagnostic-prev)
-	nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-	" GoTo code navigation.
-	nmap <silent> gd <Plug>(coc-definition)
-	nmap <silent> gy <Plug>(coc-type-definition)
-	nmap <silent> gi <Plug>(coc-implementation)
-	nmap <silent> gr <Plug>(coc-references)
-
-	" Use K to show documentation in preview window.
-	nnoremap <silent> K :call <SID>show_documentation()<CR>
-	" Highlight the symbol and its references when holding the cursor.
-	autocmd CursorHold * silent call CocActionAsync('highlight')
-
-	" Symbol renaming.
-	nmap <leader>rn <Plug>(coc-rename)
-
-	" Formatting selected code.
-	xmap <leader>f  <Plug>(coc-format-selected)
-	nmap <leader>f  <Plug>(coc-format-selected)
-
-	" Applying codeAction to the selected region.
-	" Example: `<leader>aap` for current paragraph
-	xmap <leader>a  <Plug>(coc-codeaction-selected)
-	nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-	" Remap keys for applying codeAction to the current line.
-	nmap <leader>ac  <Plug>(coc-codeaction)
-	" Apply AutoFix to problem on the current line.
-	nmap <leader>qf  <Plug>(coc-fix-current)
-
-	" 选择函数内的区域
-	" Introduce function text object
-	" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-	xmap if <Plug>(coc-funcobj-i)
-	xmap af <Plug>(coc-funcobj-a)
-	omap if <Plug>(coc-funcobj-i)
-	omap af <Plug>(coc-funcobj-a)
-
-	" Use <TAB> for selections ranges.
-	" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-	" coc-tsserver, coc-python are the examples of servers that support it.
-	nmap <silent> <TAB> <Plug>(coc-range-select)
-	xmap <silent> <TAB> <Plug>(coc-range-select)
-
-	" Add `:Format` command to format current buffer.
-	command! -nargs=0 Format :call CocAction('format')
-
-	" Add `:Fold` command to fold current buffer.
-	command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-	" Add `:OR` command for organize imports of the current buffer.
-	command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-	" Add (Neo)Vim's native statusline support.
-	" NOTE: Please see `:h coc-status` for integrations with external plugins that
-	" provide custom statusline: lightline.vim, vim-airline.
-	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-	" Mappings using CoCList:
-	" Show all diagnostics.
-	nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-	" Manage extensions.
-	nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-	" Show commands.
-	nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-	" Find symbol of current document.
-	nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-	" Search workspace symbols.
-	nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-	" Do default action for next item.
-	nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-	" Do default action for previous item.
-	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-	" Resume latest coc list.
-	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-endfun
-
-autocmd FileType javascript :call GoCoc()
 
 Plug 'isRuslan/vim-es6'
 Plug 'groenewege/vim-less'
@@ -442,21 +303,6 @@ nnoremap <F9> :TagbarToggle<CR>
 "符号自动环绕
 " Plug 'tpope/vim-surround'
 
-" Markdown
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'junegunn/goyo.vim'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
-nnoremap <silent> <leader>d :Goyo<cr>
-let g:mkdp_path_to_chrome="chrom"
-let g:mkdp_auto_close=0
-augroup markdown
-	autocmd!
-	autocmd filetype markdown nnoremap <F7> <Plug>MarkdownPreview
-	autocmd filetype markdown nnoremap <F8> <Plug>StopMarkdownPreview
-augroup END
-
 
 "前端配置"
 Plug 'mattn/emmet-vim'
@@ -476,8 +322,6 @@ let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
 ""defalut g:pydiction_menu_height == 15
 "let g:pydiction_menu_height = 20"
 
-
-
 " vim-powerline插件
 Plug 'https://github.com/Lokaltog/vim-powerline.git'
 set laststatus=2
@@ -494,8 +338,6 @@ function! Vimnote(notetext)
 	exec "normal! i\" ".a:notetext." ---------------------- {{{"
 	exec "normal! o }}} -".a:notetext." END"
 endfunction
-
-
 " }}}
 
 " 语言配置 ---------------------- {{{
@@ -505,21 +347,6 @@ augroup emmet
 	autocmd FileType js,vue,html,php let g:user_emmet_expandabbr_key = '<Tab>'
 augroup END
 let g:user_emmet_expandabbr_key = '<c-e>'
-
-
-"Vue语法判断插件
-Plug 'posva/vim-vue'
-"Vue语法判断插件
-augroup vuegroup
-	autocmd!
-	autocmd FileType vue syntax sync fromstart
-	autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-	autocmd FileType vue inoremap {{ {{  }}<esc>hhi
-	autocmd FileType vue nnoremap <leader>c :set ft=css<cr>
-	autocmd FileType vue nnoremap <leader>h :set ft=html<cr>
-	autocmd FileType vue nnoremap <leader>v :set ft=vue<cr>
-	autocmd FileType vue nnoremap <leader>j :set ft=javascript<cr>
-augroup END
 
 let g:prettier#config#single_quote = 'true'
 let g:prettier#config#jsx_single_quote = 'true'
@@ -565,67 +392,6 @@ augroup htmlgroup
 	autocmd FileType html nnoremap <buffer> <F5> :call ViewInBrowser("cr")<cr>
 augroup END
 
-"PHP"
-"在浏览器预览 for Mac
-function! ViewInBrowser(name)
-	let file = expand("%:p")
-	let l:browsers = {
-				\"cr":"open -a \"Google Chrome\"",
-				\"ff":"open -a Firefox",
-				\}
-	let htdocs='/Library/WebServer/Documents/'
-	let strpos = stridx(file, substitute(htdocs, '\\\\', '\', "g"))
-	let file = '"'. file . '"'
-	exec ":update " .file
-	"echo file .' ## '. htdocs
-	if strpos == -1
-		exec ":silent ! ". l:browsers[a:name] ." file://". file
-	else
-		let file=substitute(file, htdocs, "http://127.0.0.1:8088/", "g")
-		let file=substitute(file, '\\', '/', "g")
-		exec ":silent ! ". l:browsers[a:name] file
-	endif
-endfunction
-
-
-"JAVA"
-augroup javaconfig
-	autocmd!
-	"java自动补全
-	autocmd FileType java setlocal omnifunc=javacomplete#Complete
-	autocmd FileType java set omnifunc=javacomplete#Complete
-	autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
-	autocmd FileType java inoremap <exxpr><CR> pumvisible()?"\<C-Y>":"<CR>"
-	autocmd FileType java nnoremap <leader>p oSystem.out.println();<esc>hi
-	"java自动运行"
-	autocmd FileType java nnoremap <buffer> <F5> :!java %:r<cr>
-	autocmd FileType java nnoremap <buffer> <F4> :!javac %<cr>
-augroup END
-
-"Makefile
-augroup Makefile
-	autocmd!
-	autocmd FileType make nnoremap <buffer> <leader>r :!make<cr>
-	autocmd FileType make nnoremap <buffer> <F5> :!make<cr>
-augroup END
-"测试用的C
-augroup Ctest
-	autocmd!
-	" 编译本文件，生成和本文件名相同的可执行文件（无后缀）
-	autocmd FileType c nnoremap <buffer> <F5> :!make<cr>
-	" 清除编译文件
-	autocmd FileType c nnoremap <buffer> <F4> :!make clean<cr>
-	" 运行本文件编译后的可执行文件
-	autocmd FileType c nnoremap <buffer> <leader>r :!%:r<cr>
-augroup END
-
-"Go
-augroup Goconfig
-	autocmd!
-	autocmd FileType go nnoremap <buffer> <F5> :!go run %<cr>
-	autocmd FileType go iabbrev fpl fmt.Println()
-augroup END
-
 "PYTHON"
 function! PythonShow(python_command)
 	let output = system(a:python_command . " " . bufname("%"))
@@ -647,16 +413,8 @@ augroup pythonconfig
 	autocmd BufNewFile,BufNewFile *.py*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 augroup END
 
-
-"RUBY"
-augroup rubyconfig
-	autocmd!
-	autocmd BufNewFile *.rb :call setline(1,"#coding:utf-8")
-	autocmd FileType ruby nnoremap <buffer> <F5> :!ruby %<cr>
-augroup END
-
 "  }}} -语言配置 END
-
+"
 "Js eslint"
 function! EslintShow()
 	let output = system("eslint " . bufname("%"))
@@ -677,30 +435,3 @@ Plug 'chemzqm/vim-jsx-improve'
 let g:jsx_improve_motion_disable = 1
 
 call plug#end()
-
-"自定义函数
-augroup self
-	autocmd!
-	"用法"
-	":%s//\=Pxtovw(submatch(1))
-	function! Pxtovw(num)
-		let l:a = a:num / 12.0
-		return printf('%.2fvw',l:a)
-	endfunction
-	"JSON格式化
-	function! FormatJson()
-python << EOF
-import vim
-import json
-try:
-    buf = vim.current.buffer
-    json_content = '\n'.join(buf[:])
-    content = json.loads(json_content)
-    sorted_content = json.dumps(content, indent=4, sort_keys=True)
-    buf[:] = sorted_content.split('\n')
-except Exception, e:
-    print e
-EOF
-endfunction
-augroup END
-
