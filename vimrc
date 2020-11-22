@@ -182,24 +182,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-"React
-" 这个插件对jsx支持良好但是会导致普通的js {} 换行时缩进错位
-" Plug 'neoclide/vim-jsx-improve' 
-"
-
-" 这个插件会导致非常卡顿
-" Plug 'pangloss/vim-javascript'
-" let g:jsx_ext_required = 0
-" let g:javascript_plugin_jsdoc = 0
-" let g:javascript_plugin_flow = 0
-" augroup javascript_folding
-"     au!
-"     au FileType javascript setlocal foldmethod=syntax
-" augroup END
-
-" 会导致页面卡顿
-" Plug 'maxmellon/vim-jsx-pretty'
-
 Plug 'styled-components/vim-styled-components'
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -222,13 +204,6 @@ let g:NERDCustomDelimiters = {
 
 let g:NERDAltDelims_javascript = 1
 let g:NERDDefaultNesting = 1
-
-
-
-
-Plug 'gmarik/Vundle.vim'
-Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/indentpython.vim'
 
 "目录级搜索
 Plug 'kien/ctrlp.vim'
@@ -273,31 +248,10 @@ let g:nerdtree_tabs_open_on_console_startup=1 "在终端启动vim时共享NERDTr
 
 
 Plug 'isRuslan/vim-es6'
-Plug 'groenewege/vim-less'
-
-"Go 代码高亮和检测
-Plug 'Blackrush/vim-gocode'
-
-"html xml自动闭合标签
-Plug 'docunext/closetag.vim'
-"swift
-Plug 'toyamarinyon/vim-swift'
-"java
-Plug 'vim-scripts/javacomplete'
-"nodeJs
-Plug 'jamescarr/snipmate-nodejs'
-Plug 'guileen/vim-node'
 
 "Git配置"
 Plug 'tpope/vim-fugitive'
 " Plug 'airblade/vim-gitgutter.git'
-
-"Tagbar
-Plug 'majutsushi/tagbar'
-let g:tagbar_ctags_bin='/usr/bin/ctags'
-let g:tagbar_width=30
-let g:tagbar_right=1
-nnoremap <F9> :TagbarToggle<CR>
 
 
 "符号自动环绕
@@ -307,57 +261,20 @@ nnoremap <F9> :TagbarToggle<CR>
 "前端配置"
 Plug 'mattn/emmet-vim'
 
-"代码自动格式化
-"https://github.com/prettier/vim-prettier
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-
-" augroup filetype_web
-"		autocmd!
-"		autocmd FileType html,css,php,vue, EmmetInstall
-" augroup END
-
-
-"pydiction 1.2 python auto complete
-let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
-""defalut g:pydiction_menu_height == 15
-"let g:pydiction_menu_height = 20"
-
 " vim-powerline插件
 Plug 'https://github.com/Lokaltog/vim-powerline.git'
 set laststatus=2
 set t_Co=256
 let g:Powerline_symbols = 'unicode'
 
-"TagBar配置
-nnoremap <Leader>md :TagbarToggle<CR>
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-let g:tagbar_ctags_bin='ctags'
-
-"注释函数"
-function! Vimnote(notetext)
-	exec "normal! i\" ".a:notetext." ---------------------- {{{"
-	exec "normal! o }}} -".a:notetext." END"
-endfunction
-" }}}
 
 " 语言配置 ---------------------- {{{
-" let g:user_emmet_install_global = 1
-augroup emmet
-	autocmd!
-	autocmd FileType js,vue,html,php let g:user_emmet_expandabbr_key = '<Tab>'
-augroup END
-let g:user_emmet_expandabbr_key = '<c-e>'
+let g:user_emmet_install_global = 1
 
 let g:prettier#config#single_quote = 'true'
 let g:prettier#config#jsx_single_quote = 'true'
 let g:prettier#config#print_width = '100'
 let g:prettier#config#bracket_spacing = 'true'
-
-" 会导致eslint冲突
-" augroup reactgroup
-"   autocmd BufWritePre *.js :Prettier
-" augroup END
-nnoremap <F2> :Prettier<CR>
 
 "复制当前选中的文本到一个新的临时Buffer
 function! BufferTemporary()
@@ -386,35 +303,6 @@ augroup node
 	autocmd FileType javascript vnoremap <buffer> B :call BufferTemporary()<cr>
 augroup END
 
-"html
-augroup htmlgroup
-	autocmd!
-	autocmd FileType html nnoremap <buffer> <F5> :call ViewInBrowser("cr")<cr>
-augroup END
-
-"PYTHON"
-function! PythonShow(python_command)
-	let output = system(a:python_command . " " . bufname("%"))
-	vsplit __Python_Output__
-	normal! ggdG
-	setlocal filetype=pythonoutput
-	setlocal buftype=nofile
-	call append(0,split(output,'\v\n'))
-endfunction
-augroup pythonconfig
-	autocmd!
-	"python3 F4启动"
-	autocmd FileType python nnoremap <buffer> <F4> :!python3 %<cr>
-	autocmd filetype python nnoremap <buffer> <F5> :!python %<cr>
-	autocmd FileType python nnoremap <buffer> <localleader>m :call append(line("$"),"if __name__ == '__main__' :")<esc>
-	autocmd FileType python nnoremap <buffer> <localleader>R :call PythonShow('python3')<cr>
-	autocmd FileType python nnoremap <buffer> <localleader>r :call PythonShow('python')<cr>
-	"表示不必要的空白字符
-	autocmd BufNewFile,BufNewFile *.py*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-augroup END
-
-"  }}} -语言配置 END
-"
 "Js eslint"
 function! EslintShow()
 	let output = system("eslint " . bufname("%"))
@@ -431,7 +319,16 @@ augroup vim
 	autocmd FileType vim nnoremap <buffer> <F5> :source %<cr>
 augroup END
 
-Plug 'chemzqm/vim-jsx-improve'
+Plug 'pangloss/vim-javascript'
+let g:jsx_ext_required = 0
+let g:javascript_plugin_jsdoc = 0
+let g:javascript_plugin_flow = 0
+augroup javascript_folding
+		au!
+		au FileType javascript setlocal foldmethod=syntax
+augroup END
+Plug 'maxmellon/vim-jsx-pretty'
+
 let g:jsx_improve_motion_disable = 1
 
 call plug#end()
